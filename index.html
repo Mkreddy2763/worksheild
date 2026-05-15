@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorkShield — Construction Worker Safety</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--black:#080808;--dark:#101010;--panel:#161616;--panel2:#1c1c1c;--border:#252525;--yellow:#f5c518;--orange:#e8650a;--white:#f0ece4;--muted:#666;--red:#c0392b;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'Barlow',sans-serif;overflow-x:hidden;line-height:1.6}
+
+/* ====== NAV ====== */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(8,8,8,.97);border-bottom:2px solid var(--yellow);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:56px;backdrop-filter:blur(12px)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;letter-spacing:4px;color:var(--yellow)}
+.nav-logo span{color:var(--white)}
+.nav-links{display:flex;gap:1.4rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--yellow)}
+
+/* ====== HERO ====== */
+#home{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:110px 3.5rem 5rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(245,197,24,.035) 59px,rgba(245,197,24,.035) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(245,197,24,.035) 59px,rgba(245,197,24,.035) 60px)}
+.hero-stripe{position:absolute;top:0;right:0;width:40%;height:100%;background:repeating-linear-gradient(-45deg,var(--yellow) 0,var(--yellow) 8px,transparent 8px,transparent 28px);opacity:.055}
+.hero-content{position:relative;z-index:1;max-width:1000px}
+.hero-badge{display:inline-flex;align-items:center;gap:.7rem;background:var(--panel);border:1px solid var(--border);padding:.4rem 1rem;margin-bottom:2rem}
+.hero-badge-dot{width:7px;height:7px;border-radius:50%;background:var(--yellow);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-badge span{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4.5rem,12vw,11rem);line-height:.88;letter-spacing:2px;margin-bottom:2rem}
+.hero-title em{color:var(--yellow);font-style:normal;display:block}
+.hero-sub{font-size:1rem;font-weight:300;color:#999;max-width:500px;line-height:1.8;margin-bottom:3rem;padding-left:1.2rem;border-left:3px solid var(--orange)}
+.hero-stats{display:flex;gap:3.5rem;flex-wrap:wrap;margin-bottom:3rem}
+.stat .n{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--yellow);line-height:1}
+.stat .l{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.hero-scroll{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.8rem}
+.hero-scroll::before{content:'';width:36px;height:1px;background:var(--muted);display:block}
+
+/* ====== SECTION BASE ====== */
+section{padding:5.5rem 3.5rem;border-top:1px solid var(--border)}
+.sec-tag{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;letter-spacing:4px;text-transform:uppercase;color:var(--yellow);margin-bottom:.4rem}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5.5vw,4.8rem);line-height:1;letter-spacing:2px;margin-bottom:.8rem}
+.sec-lead{font-size:.95rem;color:#888;max-width:600px;line-height:1.75;margin-bottom:3rem}
+.divider{height:1px;background:linear-gradient(90deg,var(--yellow),transparent);margin:3rem 0;opacity:.3}
+
+/* ====== TEAM ====== */
+#team{background:var(--dark)}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border)}
+.team-card{background:var(--panel);padding:1.8rem 1.5rem;transition:background .25s;position:relative;overflow:hidden}
+.team-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--border);transition:background .25s}
+.team-card:hover{background:var(--panel2)}
+.team-card:hover::before{background:var(--yellow)}
+.team-card .roll{font-family:'Barlow Condensed',sans-serif;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.team-card .name{font-family:'Barlow Condensed',sans-serif;font-size:1.15rem;font-weight:700;color:var(--white);line-height:1.2}
+.team-num{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:rgba(245,197,24,.06);position:absolute;bottom:.5rem;right:1rem;line-height:1}
+
+/* ====== PROBLEM STATEMENT ====== */
+#problem{background:var(--black)}
+.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);margin-bottom:2px}
+.prob-card{background:var(--panel);padding:2rem;border-left:3px solid transparent;transition:border-color .3s}
+.prob-card:hover{border-color:var(--yellow)}
+.prob-card .cnum{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:rgba(255,255,255,.05);line-height:1}
+.prob-card h3{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--yellow);margin-bottom:.5rem}
+.prob-card p{font-size:.88rem;color:#999;line-height:1.65}
+.pov-banner{background:var(--yellow);color:var(--black);padding:2.5rem 3rem;margin-top:2px}
+.pov-banner .pov-l{font-size:.65rem;letter-spacing:4px;text-transform:uppercase;font-weight:800;opacity:.5;margin-bottom:.6rem}
+.pov-banner p{font-family:'Barlow Condensed',sans-serif;font-size:1.35rem;font-weight:600;line-height:1.5;max-width:900px}
+.hmw-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);margin-top:2px}
+.hmw-card{background:var(--black);padding:1.8rem;position:relative;overflow:hidden}
+.hmw-card::after{content:attr(data-n);font-family:'Bebas Neue',sans-serif;font-size:5rem;color:rgba(245,197,24,.06);position:absolute;top:.5rem;right:1rem;line-height:1}
+.hmw-card .htag{font-family:'Barlow Condensed',sans-serif;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:.4rem;display:block}
+.hmw-card p{font-size:.88rem;color:#bbb;line-height:1.6;position:relative;z-index:1}
+
+/* ====== EMPATHY ====== */
+#empathy{background:var(--dark)}
+.persona-bar{background:var(--panel);border:1px solid var(--border);padding:1.8rem 2.5rem;display:flex;align-items:center;gap:2rem;margin-bottom:3rem}
+.p-avatar{width:64px;height:64px;background:var(--yellow);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--black);flex-shrink:0}
+.p-info h3{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:2px}
+.p-info p{color:#777;font-size:.88rem;margin-top:2px}
+.eq-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border)}
+.eq{background:var(--panel);padding:2rem}
+.eq-head{display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
+.eq-icon{font-size:1.1rem}
+.eq-label{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:2px;color:var(--yellow)}
+.eq ul{list-style:none}
+.eq ul li{font-size:.88rem;color:#aaa;padding:.45rem 0;border-bottom:1px solid var(--border);line-height:1.5}
+.eq ul li:last-child{border-bottom:none}
+.eq ul li::before{content:'—';color:var(--yellow);margin-right:.6rem;font-size:.75rem}
+.insight-strip{margin-top:2px;display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border)}
+.ins-box{background:var(--orange);padding:2rem 2.5rem}
+.ins-box h4{font-family:'Barlow Condensed',sans-serif;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:.5rem;color:rgba(0,0,0,.45)}
+.ins-box p{font-size:.9rem;color:var(--black);font-weight:500;line-height:1.6}
+
+/* ====== FIELD OBSERVATIONS ====== */
+#interviews{background:var(--black)}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);margin-bottom:3rem}
+.site-card{background:var(--panel);padding:2.5rem}
+.site-card .site-label{font-family:'Barlow Condensed',sans-serif;font-size:.68rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.site-card h3{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:1px;margin-bottom:1.5rem}
+.site-card h3 span{color:var(--yellow)}
+.obs-item{display:flex;gap:.8rem;margin-bottom:1rem;align-items:flex-start}
+.obs-dot{width:6px;height:6px;border-radius:50%;background:var(--yellow);margin-top:.45rem;flex-shrink:0}
+.obs-item p{font-size:.88rem;color:#aaa;line-height:1.5}
+.insight-flag{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.5rem;padding:.5rem 1rem;font-family:'Barlow Condensed',sans-serif;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;font-weight:700}
+.flag-warn{background:rgba(232,101,10,.15);border:1px solid var(--orange);color:var(--orange)}
+.flag-good{background:rgba(245,197,24,.1);border:1px solid var(--yellow);color:var(--yellow)}
+.journey-table{width:100%;border-collapse:collapse;margin-top:2rem}
+.journey-table th{background:var(--panel);padding:1rem;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--yellow);text-align:left;border:1px solid var(--border)}
+.journey-table td{padding:1rem;font-size:.85rem;color:#aaa;border:1px solid var(--border);vertical-align:top;line-height:1.5}
+.journey-table tr:hover td{background:var(--panel)}
+.quote-box{background:var(--panel2);border-left:3px solid var(--yellow);padding:1.5rem 2rem;margin-top:1rem;font-size:.95rem;color:#ccc;font-style:italic;line-height:1.7}
+
+/* ====== SECONDARY RESEARCH ====== */
+#research{background:var(--dark)}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);margin-bottom:3rem}
+.res-card{background:var(--panel);padding:2rem;position:relative;overflow:hidden}
+.res-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--border)}
+.res-card:hover::before{background:var(--yellow)}
+.res-card .flag{font-size:1.5rem;margin-bottom:.8rem}
+.res-card h3{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--yellow);margin-bottom:.6rem}
+.res-card p{font-size:.85rem;color:#999;line-height:1.65}
+.laws-compare{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);margin-top:2px}
+.law-panel{background:var(--panel);padding:2rem}
+.law-panel h3{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:2px;color:var(--yellow);margin-bottom:1.2rem;display:flex;align-items:center;gap:.7rem}
+.law-item{display:flex;gap:.8rem;align-items:flex-start;margin-bottom:.9rem}
+.law-item .law-dot{width:5px;height:5px;border-radius:50%;background:var(--yellow);margin-top:.5rem;flex-shrink:0}
+.law-item p{font-size:.85rem;color:#aaa;line-height:1.5}
+
+/* ====== PROPOSED SOLUTIONS ====== */
+#solutions{background:var(--black)}
+.ideation-header{background:var(--panel);border:1px solid var(--border);padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:3rem;flex-wrap:gap}
+.ideation-header h3{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px}
+.ideation-nums{display:flex;gap:2rem}
+.istat .in{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--yellow);line-height:1}
+.istat .il{font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.matrix-title{font-family:'Barlow Condensed',sans-serif;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.matrix-table{width:100%;border-collapse:collapse;margin-bottom:3rem;font-size:.82rem}
+.matrix-table th{background:var(--yellow);color:var(--black);padding:.7rem 1rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase;text-align:left;font-weight:700}
+.matrix-table td{padding:.65rem 1rem;border:1px solid var(--border);color:#aaa;vertical-align:top;line-height:1.4}
+.matrix-table tr:nth-child(even) td{background:var(--panel)}
+.matrix-table tr:hover td{background:var(--panel2)}
+.top-idea-banner{background:var(--yellow);color:var(--black);padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;margin-top:3rem;flex-wrap:wrap;gap:1rem}
+.top-idea-banner h3{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;letter-spacing:2px}
+.top-idea-banner p{font-size:.9rem;font-weight:600;max-width:500px;line-height:1.5}
+.top-idea-banner .badge{background:var(--black);color:var(--yellow);font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;padding:5px 14px}
+
+/* ====== HARDWARE ====== */
+#hardware{background:var(--dark)}
+.hw-top{display:grid;grid-template-columns:1.2fr 1fr;gap:3rem;margin-bottom:3rem;align-items:start}
+.cost-table{width:100%;border-collapse:collapse}
+.cost-table th{background:var(--black);padding:.9rem 1rem;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--yellow);text-align:left;border:1px solid var(--border)}
+.cost-table td{padding:.9rem 1rem;border:1px solid var(--border);font-size:.85rem;color:#aaa;line-height:1.4}
+.cost-table tr:last-child td{background:var(--yellow);color:var(--black);font-weight:700;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;letter-spacing:1px}
+.cost-table tr:hover:not(:last-child) td{background:var(--panel)}
+.arch-box{background:var(--black);border:1px solid var(--border);padding:2rem}
+.arch-box h3{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--yellow);margin-bottom:1.5rem}
+.arch-flow{display:flex;flex-direction:column;gap:0}
+.arch-node{background:var(--panel);border:1px solid var(--border);padding:.9rem 1.2rem;position:relative;font-size:.82rem;color:#ccc;display:flex;align-items:center;gap:.8rem}
+.arch-node .an-label{font-family:'Barlow Condensed',sans-serif;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);min-width:70px}
+.arch-node:not(:last-child)::after{content:'▼';position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);color:var(--yellow);font-size:.7rem;z-index:1}
+.arch-arrow{height:14px}
+.specs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);margin-top:3rem}
+.spec-card{background:var(--panel);padding:1.8rem}
+.spec-card h3{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--yellow);margin-bottom:1rem}
+.spec-row{display:flex;justify-content:space-between;align-items:center;padding:.45rem 0;border-bottom:1px solid var(--border)}
+.spec-row:last-child{border-bottom:none}
+.spec-row .sk{font-size:.8rem;color:var(--muted)}
+.spec-row .sv{font-size:.8rem;color:var(--white);font-weight:500}
+
+/* ====== PROTOTYPE ====== */
+#prototype{background:var(--black)}
+.proto-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border)}
+.proto-card{background:var(--panel);padding:2rem}
+.proto-card h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:var(--yellow);margin-bottom:1rem}
+.proto-card p{font-size:.88rem;color:#aaa;line-height:1.7}
+.proto-card ul{list-style:none;margin-top:.8rem}
+.proto-card ul li{font-size:.85rem;color:#aaa;padding:.35rem 0;border-bottom:1px solid var(--border);display:flex;gap:.6rem}
+.proto-card ul li::before{content:'⚙';color:var(--yellow);font-size:.75rem;margin-top:.1rem}
+/* SVG diagram shared styles */
+.diag-wrap{background:var(--black);border:1px solid var(--border);padding:1.5rem;margin:2rem 0;overflow-x:auto}
+.diag-wrap svg{display:block;max-width:100%;height:auto;font-family:'Barlow Condensed',sans-serif}
+
+/* ====== ROADMAP ====== */
+#roadmap{background:var(--dark)}
+.timeline{position:relative;padding-left:2rem;margin-top:2rem}
+.timeline::before{content:'';position:absolute;top:0;bottom:0;left:0;width:2px;background:linear-gradient(180deg,var(--yellow),var(--orange),transparent)}
+.t-item{position:relative;padding:0 0 3rem 2.5rem}
+.t-item:last-child{padding-bottom:0}
+.t-dot{position:absolute;left:-7px;top:.2rem;width:16px;height:16px;border-radius:50%;background:var(--yellow);border:3px solid var(--black)}
+.t-week{font-family:'Barlow Condensed',sans-serif;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--yellow);margin-bottom:.3rem}
+.t-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:1px;margin-bottom:.4rem}
+.t-desc{font-size:.88rem;color:#888;line-height:1.65;max-width:600px}
+
+/* ====== SIMULATION RESULTS ====== */
+#results{background:var(--black)}
+.results-big{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);margin-bottom:3rem}
+.res-big-card{background:var(--panel);padding:2rem;text-align:center}
+.res-big-num{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--yellow);line-height:1}
+.res-big-label{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:.4rem}
+.result-detail{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border)}
+.rd-card{background:var(--panel);padding:2rem}
+.rd-card h3{font-family:'Barlow Condensed',sans-serif;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--yellow);margin-bottom:1rem}
+.rd-bar-wrap{margin-bottom:.9rem}
+.rd-bar-label{display:flex;justify-content:space-between;font-size:.78rem;color:#aaa;margin-bottom:.3rem}
+.rd-bar{height:5px;background:var(--border);border-radius:2px;overflow:hidden}
+.rd-bar-fill{height:100%;background:var(--yellow);border-radius:2px}
+
+/* ====== FUTURE SCOPE ====== */
+#future{background:var(--dark)}
+.future-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border)}
+.fut-card{background:var(--panel);padding:2rem;border-top:3px solid var(--border);transition:border-color .3s}
+.fut-card:hover{border-color:var(--yellow)}
+.fut-icon{font-size:1.8rem;margin-bottom:1rem}
+.fut-card h3{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:1px;margin-bottom:.6rem}
+.fut-card p{font-size:.85rem;color:#888;line-height:1.65}
+
+/* ====== CONCLUSION ====== */
+#conclusion{background:var(--black)}
+.conc-inner{max-width:800px}
+.conc-quote{font-family:'Barlow Condensed',sans-serif;font-size:1.7rem;font-weight:600;line-height:1.4;color:var(--white);margin-bottom:2rem;border-left:4px solid var(--yellow);padding-left:1.5rem}
+.conc-body{font-size:.95rem;color:#888;line-height:1.8;margin-bottom:2rem}
+.conc-tags{display:flex;flex-wrap:wrap;gap:.6rem}
+.ctag{background:var(--panel);border:1px solid var(--border);padding:.35rem .9rem;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+
+/* ====== FOOTER ====== */
+footer{background:var(--dark);border-top:2px solid var(--yellow);padding:3rem 3.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:var(--yellow)}
+.footer-logo span{color:var(--white)}
+footer p{font-size:.78rem;color:var(--muted);letter-spacing:1px}
+
+/* ====== UTILITY ====== */
+.tag-pill{display:inline-block;background:rgba(245,197,24,.1);border:1px solid rgba(245,197,24,.25);color:var(--yellow);font-family:'Barlow Condensed',sans-serif;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;margin:.2rem}
+.sep-line{height:1px;background:linear-gradient(90deg,var(--yellow),transparent);margin:3rem 0;opacity:.25}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Work<span>Shield</span></div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#empathy">Empathy</a></li>
+    <li><a href="#interviews">Field Study</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#solutions">Solutions</a></li>
+    <li><a href="#hardware">Hardware</a></li>
+    <li><a href="#prototype">Prototype</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#future">Future</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="home" style="border-top:none">
+  <div class="hero-bg"></div>
+  <div class="hero-stripe"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span>Design Thinking — Final Documentation</span>
+    </div>
+    <h1 class="hero-title">
+      Work<em>Shield</em>
+    </h1>
+    <p class="hero-sub">A drone-powered intelligent safety monitoring system designed to protect construction workers from falls, hazardous zones, and PPE non-compliance — in real time.</p>
+    <div class="hero-stats">
+      <div class="stat"><span class="n">165</span><span class="l">injuries per 1,000 workers</span></div>
+      <div class="stat"><span class="n">72</span><span class="l">ideas generated</span></div>
+      <div class="stat"><span class="n">8</span><span class="l">team members</span></div>
+      <div class="stat"><span class="n">₹4.2L</span><span class="l">prototype budget</span></div>
+    </div>
+    <div class="hero-scroll">Scroll to explore</div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" style="background:var(--dark)">
+  <div class="sec-tag">Project Squad</div>
+  <div class="sec-title">TEAM EAGLE</div>
+  <div class="sec-lead">Eight engineers across disciplines — Electronics, CSE, IT, CVIL, BIOTECH and AI — united by one mission: making construction sites safer.</div>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="roll">SE24UARI026</div>
+      <div class="name">B Mukesh Reddy</div>
+      <div class="team-num">01</div>
+    </div>
+    <div class="team-card">
+      <div class="roll">SE24UARI028</div>
+      <div class="name">Varun Varma</div>
+      <div class="team-num">02</div>
+    </div>
+    <div class="team-card">
+      <div class="roll">SE24UCSE002</div>
+      <div class="name">S Kuswant Reddy</div>
+      <div class="team-num">03</div>
+    </div>
+    <div class="team-card">
+      <div class="roll">SE24UCSE017</div>
+      <div class="name">Nishant Daga</div>
+      <div class="team-num">04</div>
+    </div>
+    <div class="team-card">
+      <div class="roll">SE24UCIE025</div>
+      <div class="name">Medansh Adepu</div>
+      <div class="team-num">05</div>
+    </div>
+    <div class="team-card">
+      <div class="roll">SE24UBIT038</div>
+      <div class="name">T Sai Prathik Goud</div>
+      <div class="team-num">06</div>
+    </div>
+    <div class="team-card">
+      <div class="roll">SE24UECE052</div>
+      <div class="name">Vishnu Kosgi</div>
+      <div class="team-num">07</div>
+    </div>
+    <div class="team-card">
+      <div class="roll">SE24UECE027</div>
+      <div class="name">Disha Reddy</div>
+      <div class="team-num">08</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM STATEMENT -->
+<section id="problem">
+  <div class="sec-tag">Discovery Phase</div>
+  <div class="sec-title">Problem Statement</div>
+  <div class="sec-lead">Construction is one of the world's most dangerous occupations. We mapped the root causes, pain points, and opportunities through a rigorous Design Thinking process.</div>
+
+  <div class="prob-grid">
+    <div class="prob-card">
+      <div class="cnum">01</div>
+      <h3>🧍 User / Protagonist</h3>
+      <p><strong style="color:var(--white)">Bimal Khan</strong> — A 30-year-old daily wage construction worker who works at heights, operates heavy machinery, and is exposed to dust, noise, and electrical hazards daily.</p>
+    </div>
+    <div class="prob-card">
+      <div class="cnum">02</div>
+      <h3>⚠️ Pain Points & Needs</h3>
+      <p>Lack of proper PPE · Poor safety training · Long hours in risky conditions · Unsafe scaffolding · No medical support during accidents · Dependence on daily wage income.</p>
+    </div>
+    <div class="prob-card">
+      <div class="cnum">03</div>
+      <h3>🔍 Root Causes (5 Whys)</h3>
+      <p>Safety rules not strictly followed · Contractors cut safety costs · Workers receive limited training · Poor monitoring and supervision · No advanced safety technology deployed on site.</p>
+    </div>
+    <div class="prob-card">
+      <div class="cnum">04</div>
+      <h3>📊 Evidence Base</h3>
+      <p>~165 out of every 1,000 construction workers are injured during work activities. Major causes: falls, electrocution, lack of PPE, machinery hazards. Many Indian sites still lack helmets, gloves, and boots.</p>
+    </div>
+  </div>
+
+  <div class="pov-banner">
+    <div class="pov-l">Point of View Statement</div>
+    <p>Construction site workers like Bimal Khan need safer and easier ways to work in hazardous construction environments because lack of proper safety systems, training, and protective equipment increases the risk of injuries, stress, and accidents during daily work activities.</p>
+  </div>
+
+  <div style="margin-top:2.5rem">
+    <div class="sec-tag" style="margin-bottom:.6rem">How Might We…?</div>
+  </div>
+  <div class="hmw-row">
+    <div class="hmw-card" data-n="HMW1">
+      <span class="htag">HMW 1</span>
+      <p>How might we help construction workers stay safe while working in risky environments like heights, machinery zones, and electrical areas?</p>
+    </div>
+    <div class="hmw-card" data-n="HMW2">
+      <span class="htag">HMW 2</span>
+      <p>How might we reduce workplace accidents and injuries so that construction workers can work confidently and safely?</p>
+    </div>
+    <div class="hmw-card" data-n="HMW3">
+      <span class="htag">HMW 3</span>
+      <p>How might we make it easier for construction workers to use safety equipment and follow safety procedures during daily tasks?</p>
+    </div>
+  </div>
+</section>
+
+<!-- EMPATHY MAP -->
+<section id="empathy">
+  <div class="sec-tag">Empathy Phase</div>
+  <div class="sec-title">Empathy Mapping</div>
+  <div class="sec-lead">We mapped the inner world of Bimal Khan — a representative construction worker — across four quadrants to understand what truly drives behaviour on site.</div>
+
+  <div class="persona-bar">
+    <div class="p-avatar">BK</div>
+    <div class="p-info">
+      <h3>Bimal Khan</h3>
+      <p>Age 30–40 · Daily Wage Worker · Urban Construction Sites · Hyderabad</p>
+    </div>
+  </div>
+
+  <div class="eq-grid">
+    <div class="eq">
+      <div class="eq-head"><span class="eq-icon">💬</span><span class="eq-label">Says</span></div>
+      <ul>
+        <li>"Safety equipment is not always available."</li>
+        <li>"We must complete work fast."</li>
+        <li>"Sometimes we don't get safety training."</li>
+        <li>"Work is risky but necessary."</li>
+      </ul>
+    </div>
+    <div class="eq">
+      <div class="eq-head"><span class="eq-icon">🧠</span><span class="eq-label">Thinks</span></div>
+      <ul>
+        <li>"I need to finish work quickly to earn daily wages."</li>
+        <li>"Safety equipment slows my work."</li>
+        <li>"Accidents can happen anytime on site."</li>
+        <li>"I want to return home safely to my family."</li>
+      </ul>
+    </div>
+    <div class="eq">
+      <div class="eq-head"><span class="eq-icon">🔧</span><span class="eq-label">Does</span></div>
+      <ul>
+        <li>Works on scaffolding and near heavy machinery.</li>
+        <li>Uses safety equipment when available.</li>
+        <li>Follows supervisor instructions over safety guidelines.</li>
+        <li>Continues working even in risky conditions due to wage dependency.</li>
+      </ul>
+    </div>
+    <div class="eq">
+      <div class="eq-head"><span class="eq-icon">😰</span><span class="eq-label">Feels</span></div>
+      <ul>
+        <li>Worried about falling from heights or getting injured.</li>
+        <li>Stressed due to unsafe working conditions.</li>
+        <li>Concerned about job security if he refuses risky tasks.</li>
+        <li>Responsible for supporting family financially.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="insight-strip">
+    <div class="ins-box">
+      <h4>Key Insight</h4>
+      <p>Workers are aware of risks but continue in unsafe environments due to financial pressure. They want to follow safety practices but face challenges: lack of PPE, limited training, and dependence on supervisors.</p>
+    </div>
+    <div class="ins-box" style="background:var(--panel);border:none">
+      <h4 style="color:var(--yellow)">Contradiction</h4>
+      <p style="color:#bbb">Workers say they understand the importance of safety equipment, but they sometimes work without helmets or gloves when equipment is uncomfortable or unavailable — driven by pressure to complete tasks.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FIELD OBSERVATIONS / PRIMARY INTERVIEWS -->
+<section id="interviews">
+  <div class="sec-tag">Primary Research</div>
+  <div class="sec-title">Field Observations & Interviews</div>
+  <div class="sec-lead">We conducted field visits to two types of construction sites in Hyderabad, observing working conditions and interviewing workers and supervisors directly.</div>
+
+  <div class="compare-grid">
+    <div class="site-card">
+      <div class="site-label">Site 01</div>
+      <h3>Corporate <span>Construction</span></h3>
+      <div class="obs-item"><div class="obs-dot"></div><p>Workers provided with high-quality safety equipment including helmets and PPE.</p></div>
+      <div class="obs-item"><div class="obs-dot"></div><p>Organised, systematic environment with clear supervision.</p></div>
+      <div class="obs-item"><div class="obs-dot"></div><p>Fewer working hours compared to smaller sites.</p></div>
+      <div class="obs-item"><div class="obs-dot"></div><p>Daily wage approximately ₹400/day with accommodation provided.</p></div>
+      <div class="obs-item"><div class="obs-dot"></div><p>Safety measures and inspection clearly visible on site.</p></div>
+      <div class="insight-flag flag-good">⭐ Safety & worker welfare prioritised</div>
+    </div>
+    <div class="site-card">
+      <div class="site-label">Site 02</div>
+      <h3>Independent <span>Construction</span></h3>
+      <div class="obs-item"><div class="obs-dot"></div><p>Workers do not use proper safety equipment — no helmets or protective gear observed.</p></div>
+      <div class="obs-item"><div class="obs-dot"></div><p>Less organised, lacks supervision. No safety officer present.</p></div>
+      <div class="obs-item"><div class="obs-dot"></div><p>Workers work ~12 hours per day in hazardous conditions.</p></div>
+      <div class="obs-item"><div class="obs-dot"></div><p>Daily wage approximately ₹1,200/day but no facilities or accommodation.</p></div>
+      <div class="obs-item"><div class="obs-dot"></div><p>No emergency support, first aid, or medical coverage available.</p></div>
+      <div class="insight-flag flag-warn">⚠️ Higher wages; safety completely neglected</div>
+    </div>
+  </div>
+
+  <div class="quote-box">"Eye tracking is tiring. The apps are slow. Sometimes we think she is asking one thing, but she means something else. We need a system that works consistently without errors." — Caregiver interview</div>
+  <div class="quote-box" style="margin-top:.5rem">"Helmet is uncomfortable. We take it off when the supervisor isn't looking." — Worker, Site 02</div>
+
+  <div style="margin-top:3rem">
+    <div class="sec-tag" style="margin-bottom:.8rem">User Journey Map — Bimal Khan</div>
+    <table class="journey-table">
+      <thead>
+        <tr>
+          <th>Stage</th><th>Actions</th><th>Thoughts</th><th>Feelings</th><th>Pain Points</th><th>Opportunities</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--yellow)">Job Search</strong></td>
+          <td>Travels to city; searches at labour chowks</td>
+          <td>"Will I get work today?"</td>
+          <td>😟 Hopeful but anxious</td>
+          <td>No guarantee of work; long waiting hours</td>
+          <td>Digital job platforms for construction workers</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--yellow)">Site Entry</strong></td>
+          <td>Gets selected; starts work immediately</td>
+          <td>"At least I got work."</td>
+          <td>😐 Relieved but unsure</td>
+          <td>No safety briefing; no ID or records</td>
+          <td>Worker ID system; mandatory onboarding</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--yellow)">Daily Work</strong></td>
+          <td>Carries materials; works on scaffolding</td>
+          <td>"Safety gear slows me down."</td>
+          <td>😓 Stressed, tired</td>
+          <td>Lack of PPE; long working hours; unsafe environment</td>
+          <td>Provide PPE kits; regular safety checks; training</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--yellow)">Wage Payment</strong></td>
+          <td>Waits; receives daily/weekly wages</td>
+          <td>"Will I get full payment?"</td>
+          <td>😰 Anxious</td>
+          <td>Delayed wages; wage cuts; no transparency</td>
+          <td>Digital payments; wage tracking system</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--yellow)">Injury / Risk</strong></td>
+          <td>Faces accident; stops work temporarily</td>
+          <td>"Who will pay for treatment?"</td>
+          <td>😨 Fear, helplessness</td>
+          <td>No insurance; no compensation; loss of income</td>
+          <td>Health insurance; emergency medical support</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SECONDARY RESEARCH -->
+<section id="research" style="background:var(--dark)">
+  <div class="sec-tag">Secondary Research</div>
+  <div class="sec-title">Global Context & Laws</div>
+  <div class="sec-lead">We studied worker safety laws in India and the US, Telangana Government Orders, foreign construction technology, and wage disparities to contextualise our solution.</div>
+
+  <div class="res-grid">
+    <div class="res-card">
+      <div class="flag">🇮🇳</div>
+      <h3>Key Indian Laws</h3>
+      <p>Building & Construction Workers Act · Factories Act · Minimum Wages Act · Payment of Wages Act · Occupational Safety, Health & Working Conditions Code 2020 — all mandate safety, yet enforcement remains inconsistent.</p>
+    </div>
+    <div class="res-card">
+      <div class="flag">🇺🇸</div>
+      <h3>US Safety Standards</h3>
+      <p>OSHA mandates mandatory PPE (no PPE = removed from site), daily toolbox talks, fall protection systems above 6 feet, and frequent inspections with heavy fines. Workers are certified before operating machinery.</p>
+    </div>
+    <div class="res-card">
+      <div class="flag">📋</div>
+      <h3>Telangana GOs</h3>
+      <p>G.O.Ms.No. 4 (2020): Employers must provide helmets, gloves, goggles free of cost. G.O.Rt.No. 23 (2022): OSH Code implemented state-wide. Digital inspection and online labour compliance systems mandated.</p>
+    </div>
+    <div class="res-card">
+      <div class="flag">🤖</div>
+      <h3>Technology Gap</h3>
+      <p>US uses GPS-guided excavators, AI-powered cranes, and automated safety monitoring. India still relies on manual supervision and semi-automatic machines. Advanced tech adoption is increasing but slowly.</p>
+    </div>
+    <div class="res-card">
+      <div class="flag">💰</div>
+      <h3>Wage Disparity</h3>
+      <p>US construction wages are high due to cost of living, FLSA enforcement, health insurance mandates, and skilled-labour demand. Indian wages are lower due to surplus labour supply and fewer enforced worker benefits.</p>
+    </div>
+    <div class="res-card">
+      <div class="flag">📰</div>
+      <h3>Academic References</h3>
+      <p>ILO — Safety, Health & Welfare on Construction Sites · Chan A.P.C. (2023) — Improving Safety Performance · Newaz M.T. (2025) — Critical Analysis of Construction Incident Trends · Nature (2023) — AI safety in construction.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROPOSED SOLUTIONS -->
+<section id="solutions">
+  <div class="sec-tag">Ideation Phase</div>
+  <div class="sec-title">Proposed Solutions</div>
+  <div class="sec-lead">Using the 6-3-5 Brainwriting method, our 8-member team generated 72 ideas across 3 rounds. The top idea — an autonomous safety drone — was selected for development.</div>
+
+  <div class="ideation-header" style="background:var(--panel);border:1px solid var(--border);padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem">
+    <div>
+      <div class="sec-tag" style="margin-bottom:.2rem">6-3-5 Brainwriting Method</div>
+      <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:2px">Ideation Matrix</h3>
+    </div>
+    <div style="display:flex;gap:2.5rem">
+      <div class="istat"><div class="in">6</div><div class="il">Participants</div></div>
+      <div class="istat"><div class="in">3</div><div class="il">Ideas Each</div></div>
+      <div class="istat"><div class="in">5</div><div class="il">Rounds</div></div>
+      <div class="istat"><div class="in" style="color:var(--orange)">72</div><div class="il">Total Ideas</div></div>
+    </div>
+  </div>
+
+  <div class="matrix-title">Sample ideas from each round — 72 total generated</div>
+  <table class="matrix-table">
+    <thead>
+      <tr><th>Round</th><th>Participant</th><th>Idea 1</th><th>Idea 2</th><th>Idea 3</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>R1</td><td>Mukesh</td><td>Autonomous safety drone for site monitoring</td><td>Smart helmet with fall detection sensor</td><td>RFID-based PPE compliance tracking</td></tr>
+      <tr><td>R1</td><td>Varun</td><td>AI camera system to detect missing PPE</td><td>Worker wristband with SOS alert button</td><td>Digital site induction app for workers</td></tr>
+      <tr><td>R1</td><td>Kuswant</td><td>Mobile app for safety checklist before shift</td><td>Automated scaffolding load sensor</td><td>WhatsApp-based incident reporting system</td></tr>
+      <tr><td>R2</td><td>Nishant</td><td>Drone with thermal camera for heat stress</td><td>Geofencing to alert workers near danger zones</td><td>Solar-powered PPE dispenser at site entry</td></tr>
+      <tr><td>R2</td><td>Medansh</td><td>Machine learning model to predict accident zones</td><td>IoT gas sensors for chemical exposure alerts</td><td>Wearable heart-rate monitor for fatigue detection</td></tr>
+      <tr><td>R2</td><td>Sai Prathik</td><td>Centralised safety dashboard for supervisors</td><td>Voice-activated emergency call system</td><td>AR glasses for workers to see safety warnings</td></tr>
+      <tr><td>R3</td><td>Vishnu</td><td>Automated fall-net deployment from scaffolding</td><td>Smart harness that locks if tension too high</td><td>Night-vision camera for low-light site safety</td></tr>
+      <tr><td>R3</td><td>Disha</td><td>Blockchain-based PPE compliance records</td><td>Bilingual safety training app (Hindi + Telugu)</td><td>Emergency medical drone with first-aid kit</td></tr>
+      <tr><td>R4</td><td>Mukesh+</td><td>Drone with loudspeaker for real-time alerts</td><td>Smart boots with electric shock detection</td><td>QR code health card for every worker</td></tr>
+      <tr><td>R5</td><td>All</td><td>Integrated command centre for multi-site safety</td><td>AI-powered incident prediction & reporting</td><td>Government-linked worker safety portal</td></tr>
+    </tbody>
+  </table>
+
+  <div class="top-idea-banner">
+    <div>
+      <span class="badge" style="background:var(--black);color:var(--yellow);font-family:'Barlow Condensed',sans-serif;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;padding:4px 12px;display:inline-block;margin-bottom:.8rem">⭐ Top Selected Idea</span>
+      <h3 style="font-family:'Bebas Neue',sans-serif;font-size:2.8rem;letter-spacing:2px">Autonomous Safety Drone</h3>
+    </div>
+    <p style="font-size:.95rem;font-weight:600;max-width:480px;line-height:1.6">An AI-powered drone that autonomously patrols construction sites, detects PPE violations using computer vision, identifies hazardous zones, and alerts workers and supervisors in real time.</p>
+  </div>
+</section>
+
+<!-- HARDWARE ARCHITECTURE -->
+<section id="hardware" style="background:var(--dark)">
+  <div class="sec-tag">Hardware Phase</div>
+  <div class="sec-title">Hardware Architecture</div>
+  <div class="sec-lead">The WorkShield drone system integrates computer vision, IoT sensors, and wireless communication into a deployable construction site safety monitor.</div>
+
+  <div class="hw-top">
+    <div>
+      <div class="sec-tag" style="margin-bottom:.6rem">Component Cost Breakdown</div>
+      <table class="cost-table">
+        <thead><tr><th>Component</th><th>Function</th><th>Specification</th><th>Cost (₹)</th></tr></thead>
+        <tbody>
+          <tr><td>DJI F450 Drone Frame</td><td>Quadcopter chassis</td><td>450mm wheelbase, carbon fibre</td><td>₹3,500</td></tr>
+          <tr><td>Raspberry Pi 4B (4GB)</td><td>Main compute unit — AI inference</td><td>1.8GHz quad-core, 4GB RAM</td><td>₹7,200</td></tr>
+          <tr><td>Pi Camera Module v2</td><td>PPE detection — computer vision</td><td>8MP, 1080p, wide FOV</td><td>₹2,800</td></tr>
+          <tr><td>Brushless Motors × 4</td><td>Propulsion</td><td>2212 920KV, 700g thrust each</td><td>₹2,400</td></tr>
+          <tr><td>ESC 30A × 4</td><td>Motor speed controller</td><td>30A continuous, BEC 5V</td><td>₹1,600</td></tr>
+          <tr><td>LiPo Battery 5200mAh</td><td>Power supply — ~20 min flight</td><td>11.1V 3S, 50C discharge</td><td>₹3,500</td></tr>
+          <tr><td>Flight Controller (Pixhawk)</td><td>Autopilot & stability</td><td>STM32F427, IMU + barometer</td><td>₹8,500</td></tr>
+          <tr><td>GPS Module (u-blox M8N)</td><td>Position hold, waypoint patrol</td><td>3m accuracy, 10Hz update</td><td>₹2,200</td></tr>
+          <tr><td>4G LTE Module (SIM7600)</td><td>Live stream & cloud upload</td><td>Cat-4 LTE, 150Mbps DL</td><td>₹3,800</td></tr>
+          <tr><td>MQ-2 Gas Sensor</td><td>Detect combustible gas / dust</td><td>LPG, CO, smoke detection</td><td>₹350</td></tr>
+          <tr><td>Ultrasonic Sensor (HC-SR04)</td><td>Obstacle avoidance</td><td>2cm–400cm range, 15° beam</td><td>₹250</td></tr>
+          <tr><td>Mini Speaker + Buzzer</td><td>On-drone audio alerts</td><td>3W speaker, 5V buzzer</td><td>₹400</td></tr>
+          <tr><td>Gimbal (2-axis brushless)</td><td>Camera stabilisation</td><td>±30° pitch/roll, 0.01° accuracy</td><td>₹3,500</td></tr>
+          <tr><td>Telemetry Radio (915MHz)</td><td>Ground station communication</td><td>100mW, 300m range</td><td>₹1,800</td></tr>
+          <tr><td>Enclosure + Wiring + Misc</td><td>Assembly, cables, connectors</td><td>3D-printed ABS, JST connectors</td><td>₹1,500</td></tr>
+          <tr><td colspan="3"><strong>TOTAL HARDWARE COST</strong></td><td><strong>₹43,300</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div class="sec-tag" style="margin-bottom:.6rem">System Signal Flow</div>
+      <div class="arch-box">
+        <h3>End-to-End Architecture</h3>
+        <div class="arch-flow">
+          <div class="arch-node">
+            <span class="an-label">INPUT</span>
+            <span>Pi Camera captures site video feed at 1080p / 30fps</span>
+          </div>
+          <div class="arch-arrow"></div>
+          <div class="arch-node">
+            <span class="an-label">DETECT</span>
+            <span>YOLOv8 model on Raspberry Pi 4 — PPE & hazard detection</span>
+          </div>
+          <div class="arch-arrow"></div>
+          <div class="arch-node">
+            <span class="an-label">CLASSIFY</span>
+            <span>Label: Helmet ✓/✗ · Vest ✓/✗ · Danger zone breach</span>
+          </div>
+          <div class="arch-arrow"></div>
+          <div class="arch-node">
+            <span class="an-label">ALERT</span>
+            <span>On-drone speaker warning + 4G push to supervisor dashboard</span>
+          </div>
+          <div class="arch-arrow"></div>
+          <div class="arch-node">
+            <span class="an-label">LOG</span>
+            <span>Cloud upload: timestamped violation image + GPS coordinates</span>
+          </div>
+          <div class="arch-arrow"></div>
+          <div class="arch-node">
+            <span class="an-label">NAVIGATE</span>
+            <span>Pixhawk autopilot — GPS waypoint patrol loop around site</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- System Diagram SVG -->
+  <div class="diag-wrap">
+    <div class="sec-tag" style="margin-bottom:1rem">· Complete WorkShield Drone System — Master Architecture</div>
+    <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:320px">
+      <defs>
+        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#f5c518"/>
+        </marker>
+      </defs>
+      <!-- Boxes -->
+      <rect x="10" y="110" width="120" height="70" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="70" y="135" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold" letter-spacing="1">DRONE</text>
+      <text x="70" y="150" text-anchor="middle" fill="#aaa" font-size="8">Pi Camera</text>
+      <text x="70" y="163" text-anchor="middle" fill="#aaa" font-size="8">Sensors</text>
+      <text x="70" y="176" text-anchor="middle" fill="#aaa" font-size="8">LiPo + GPS</text>
+
+      <rect x="175" y="110" width="130" height="70" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="240" y="135" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold" letter-spacing="1">AI ENGINE</text>
+      <text x="240" y="150" text-anchor="middle" fill="#aaa" font-size="8">YOLOv8 on RPi4</text>
+      <text x="240" y="163" text-anchor="middle" fill="#aaa" font-size="8">PPE Detection</text>
+      <text x="240" y="176" text-anchor="middle" fill="#aaa" font-size="8">Hazard Classify</text>
+
+      <rect x="350" y="60" width="120" height="60" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="410" y="83" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold" letter-spacing="1">ALERT</text>
+      <text x="410" y="98" text-anchor="middle" fill="#aaa" font-size="8">Drone Speaker</text>
+      <text x="410" y="111" text-anchor="middle" fill="#aaa" font-size="8">Audio Warning</text>
+
+      <rect x="350" y="175" width="120" height="60" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="410" y="198" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold" letter-spacing="1">4G STREAM</text>
+      <text x="410" y="213" text-anchor="middle" fill="#aaa" font-size="8">SIM7600 LTE</text>
+      <text x="410" y="226" text-anchor="middle" fill="#aaa" font-size="8">Live Video Feed</text>
+
+      <rect x="530" y="40" width="130" height="70" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="595" y="63" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold" letter-spacing="1">CLOUD</text>
+      <text x="595" y="78" text-anchor="middle" fill="#aaa" font-size="8">Violation Logs</text>
+      <text x="595" y="91" text-anchor="middle" fill="#aaa" font-size="8">GPS Coordinates</text>
+      <text x="595" y="104" text-anchor="middle" fill="#aaa" font-size="8">Timestamped Images</text>
+
+      <rect x="530" y="170" width="130" height="70" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="595" y="193" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold" letter-spacing="1">DASHBOARD</text>
+      <text x="595" y="208" text-anchor="middle" fill="#aaa" font-size="8">Supervisor App</text>
+      <text x="595" y="221" text-anchor="middle" fill="#aaa" font-size="8">Live Alerts</text>
+      <text x="595" y="234" text-anchor="middle" fill="#aaa" font-size="8">Safety Reports</text>
+
+      <rect x="730" y="110" width="150" height="70" rx="2" fill="#161616" stroke="#f5c518" stroke-width="1.5"/>
+      <text x="805" y="133" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold" letter-spacing="1">OUTCOME</text>
+      <text x="805" y="150" text-anchor="middle" fill="#aaa" font-size="8">✓ Violation Detected</text>
+      <text x="805" y="163" text-anchor="middle" fill="#aaa" font-size="8">✓ Worker Alerted</text>
+      <text x="805" y="176" text-anchor="middle" fill="#aaa" font-size="8">✓ Supervisor Notified</text>
+
+      <!-- Arrows -->
+      <line x1="130" y1="145" x2="175" y2="145" stroke="#f5c518" stroke-width="1.2" marker-end="url(#arr)"/>
+      <line x1="305" y1="135" x2="350" y2="100" stroke="#f5c518" stroke-width="1.2" marker-end="url(#arr)"/>
+      <line x1="305" y1="155" x2="350" y2="195" stroke="#f5c518" stroke-width="1.2" marker-end="url(#arr)"/>
+      <line x1="470" y1="90" x2="530" y2="75" stroke="#f5c518" stroke-width="1.2" marker-end="url(#arr)"/>
+      <line x1="470" y1="205" x2="530" y2="205" stroke="#f5c518" stroke-width="1.2" marker-end="url(#arr)"/>
+      <line x1="660" y1="90" x2="730" y2="135" stroke="#f5c518" stroke-width="1.2" marker-end="url(#arr)"/>
+      <line x1="660" y1="205" x2="730" y2="165" stroke="#f5c518" stroke-width="1.2" marker-end="url(#arr)"/>
+
+      <!-- Labels -->
+      <text x="70" y="100" text-anchor="middle" fill="#555" font-size="8" letter-spacing="1">ACQUISITION</text>
+      <text x="240" y="100" text-anchor="middle" fill="#555" font-size="8" letter-spacing="1">INFERENCE</text>
+      <text x="410" y="50" text-anchor="middle" fill="#555" font-size="8" letter-spacing="1">LOCAL ALERT</text>
+      <text x="410" y="168" text-anchor="middle" fill="#555" font-size="8" letter-spacing="1">TRANSMISSION</text>
+      <text x="595" y="30" text-anchor="middle" fill="#555" font-size="8" letter-spacing="1">STORAGE</text>
+      <text x="595" y="163" text-anchor="middle" fill="#555" font-size="8" letter-spacing="1">MONITORING</text>
+      <text x="805" y="100" text-anchor="middle" fill="#555" font-size="8" letter-spacing="1">OUTPUT</text>
+    </svg>
+  </div>
+
+  <div class="specs-grid">
+    <div class="spec-card">
+      <h3>🚁 Drone Specs</h3>
+      <div class="spec-row"><span class="sk">Frame</span><span class="sv">DJI F450 450mm</span></div>
+      <div class="spec-row"><span class="sk">Max Takeoff Weight</span><span class="sv">1.5 kg</span></div>
+      <div class="spec-row"><span class="sk">Flight Time</span><span class="sv">~20 minutes</span></div>
+      <div class="spec-row"><span class="sk">Max Speed</span><span class="sv">10 m/s</span></div>
+      <div class="spec-row"><span class="sk">Operating Altitude</span><span class="sv">10–50 m AGL</span></div>
+    </div>
+    <div class="spec-card">
+      <h3>🤖 AI Specs</h3>
+      <div class="spec-row"><span class="sk">Model</span><span class="sv">YOLOv8-nano</span></div>
+      <div class="spec-row"><span class="sk">Compute</span><span class="sv">Raspberry Pi 4B</span></div>
+      <div class="spec-row"><span class="sk">Inference Speed</span><span class="sv">&lt; 200ms / frame</span></div>
+      <div class="spec-row"><span class="sk">Detection Classes</span><span class="sv">Helmet, Vest, Person</span></div>
+      <div class="spec-row"><span class="sk">Accuracy (simulated)</span><span class="sv">82%</span></div>
+    </div>
+    <div class="spec-card">
+      <h3>📡 Communication</h3>
+      <div class="spec-row"><span class="sk">Module</span><span class="sv">SIM7600 4G LTE</span></div>
+      <div class="spec-row"><span class="sk">Telemetry</span><span class="sv">915MHz Radio</span></div>
+      <div class="spec-row"><span class="sk">Stream Latency</span><span class="sv">&lt; 300ms</span></div>
+      <div class="spec-row"><span class="sk">GPS Accuracy</span><span class="sv">3m (u-blox M8N)</span></div>
+      <div class="spec-row"><span class="sk">Alert Channels</span><span class="sv">Audio + App + Cloud</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROTOTYPE MECHANICS -->
+<section id="prototype">
+  <div class="sec-tag">Prototype Phase</div>
+  <div class="sec-title">Prototype Mechanics</div>
+  <div class="sec-lead">The WorkShield prototype is a bench-assembled quadcopter with an onboard AI compute module, camera gimbal, and sensor suite — designed for iterative testing and deployment.</div>
+
+  <!-- PPE Detection Flow Diagram -->
+  <div class="diag-wrap">
+    <div class="sec-tag" style="margin-bottom:1rem">· PPE Violation Detection — Computer Vision Pipeline</div>
+    <svg viewBox="0 0 860 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:180px">
+      <defs>
+        <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#f5c518"/>
+        </marker>
+      </defs>
+      <rect x="10" y="60" width="110" height="60" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="65" y="85" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold">CAMERA</text>
+      <text x="65" y="100" text-anchor="middle" fill="#aaa" font-size="8">1080p Frame</text>
+      <text x="65" y="113" text-anchor="middle" fill="#aaa" font-size="8">30fps Capture</text>
+
+      <line x1="120" y1="90" x2="150" y2="90" stroke="#f5c518" stroke-width="1.2" marker-end="url(#arr2)"/>
+
+      <rect x="150" y="60" width="120" height="60" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="210" y="85" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold">PREPROCESS</text>
+      <text x="210" y="100" text-anchor="middle" fill="#aaa" font-size="8">Resize 640×640</text>
+      <text x="210" y="113" text-anchor="middle" fill="#aaa" font-size="8">Normalise RGB</text>
+
+      <line x1="270" y1="90" x2="300" y2="90" stroke="#f5c518" stroke-width="1.2" marker-end="url(#arr2)"/>
+
+      <rect x="300" y="60" width="130" height="60" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="365" y="85" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold">YOLOv8 INFER</text>
+      <text x="365" y="100" text-anchor="middle" fill="#aaa" font-size="8">Bounding boxes</text>
+      <text x="365" y="113" text-anchor="middle" fill="#aaa" font-size="8">Confidence &gt; 0.7</text>
+
+      <line x1="430" y1="90" x2="460" y2="90" stroke="#f5c518" stroke-width="1.2" marker-end="url(#arr2)"/>
+
+      <rect x="460" y="60" width="120" height="60" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="520" y="85" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold">CLASSIFY</text>
+      <text x="520" y="100" text-anchor="middle" fill="#aaa" font-size="8">Helmet ✓ / ✗</text>
+      <text x="520" y="113" text-anchor="middle" fill="#aaa" font-size="8">Vest ✓ / ✗</text>
+
+      <line x1="580" y1="75" x2="610" y2="55" stroke="#f5c518" stroke-width="1.2" marker-end="url(#arr2)"/>
+      <line x1="580" y1="105" x2="610" y2="125" stroke="#f5c518" stroke-width="1.2" marker-end="url(#arr2)"/>
+
+      <rect x="610" y="30" width="110" height="45" rx="2" fill="#1c1c1c" stroke="#f5c518"/>
+      <text x="665" y="50" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold">COMPLIANT</text>
+      <text x="665" y="65" text-anchor="middle" fill="#aaa" font-size="8">Log — Continue</text>
+
+      <rect x="610" y="105" width="110" height="45" rx="2" fill="#1c1c1c" stroke="#e8650a"/>
+      <text x="665" y="125" text-anchor="middle" fill="#e8650a" font-size="9" font-weight="bold">VIOLATION</text>
+      <text x="665" y="140" text-anchor="middle" fill="#aaa" font-size="8">Alert + Capture</text>
+
+      <line x1="720" y1="130" x2="750" y2="130" stroke="#e8650a" stroke-width="1.2" marker-end="url(#arr2)"/>
+      <rect x="750" y="108" width="100" height="45" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="800" y="128" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold">NOTIFY</text>
+      <text x="800" y="143" text-anchor="middle" fill="#aaa" font-size="8">App + Speaker</text>
+    </svg>
+  </div>
+
+  <div class="proto-grid">
+    <div class="proto-card">
+      <h3>🚁 Mechanical Assembly</h3>
+      <p>The F450 frame holds four 2212 brushless motors at each arm. The Pixhawk flight controller sits centrally for vibration isolation. A 2-axis gimbal stabilises the Pi Camera to ensure clear video even during turns. All electronics are mounted on a custom 3D-printed ABS tray inside the frame.</p>
+      <ul>
+        <li>Carbon fibre arms + central ABS hub</li>
+        <li>Vibration-dampened FC mount</li>
+        <li>Custom 3D-printed sensor pod underneath</li>
+        <li>Balanced propellers: 2× CW + 2× CCW</li>
+      </ul>
+    </div>
+    <div class="proto-card">
+      <h3>🧠 Software Stack</h3>
+      <p>The Raspberry Pi 4 runs a Python inference loop at 5fps using YOLOv8-nano. Detected violations trigger audio via PyAudio and push a JSON alert over 4G to a Node.js cloud backend. A simple web dashboard allows supervisors to view the live stream and incident log.</p>
+      <ul>
+        <li>YOLOv8-nano — ultralytics Python library</li>
+        <li>OpenCV — frame capture + annotation</li>
+        <li>Flask API — local REST endpoint</li>
+        <li>Node.js + MQTT — cloud alert broker</li>
+      </ul>
+    </div>
+    <div class="proto-card">
+      <h3>📡 Patrol Logic</h3>
+      <p>The Pixhawk autopilot runs ArduCopter firmware. A pre-programmed GPS waypoint mission is uploaded via Mission Planner. The drone loops around the construction perimeter at 15m altitude, hovering at inspection points for 10s before moving to the next.</p>
+      <ul>
+        <li>ArduCopter autonomous waypoint mode</li>
+        <li>Return-to-home on low battery (&lt;20%)</li>
+        <li>Obstacle avoidance: HC-SR04 front sensor</li>
+        <li>Telemetry link to ground station PC</li>
+      </ul>
+    </div>
+    <div class="proto-card">
+      <h3>⚡ Power Management</h3>
+      <p>A 3S 5200mAh LiPo provides ~20 minutes of flight time under full load. A power distribution board (PDB) routes 12V to motors via ESCs and steps down to 5V for the Raspberry Pi and sensors. A voltage alarm triggers RTH at 10.5V (20% capacity).</p>
+      <ul>
+        <li>PDB with integrated BEC 5V / 3A</li>
+        <li>LiPo voltage monitor + buzzer alarm</li>
+        <li>Total draw: ~18A hover, ~28A peak</li>
+        <li>Charging: B6AC balance charger, 1C rate</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap" style="background:var(--dark)">
+  <div class="sec-tag">Development Phase</div>
+  <div class="sec-title">Weekly Roadmap</div>
+  <div class="sec-lead">A 10-week structured project timeline — from problem discovery to final prototype validation and documentation.</div>
+
+  <div class="timeline">
+    <div class="t-item">
+      <div class="t-dot"></div>
+      <div class="t-week">Week 1–2</div>
+      <div class="t-title">Problem Discovery & Field Research</div>
+      <div class="t-desc">Conducted field visits to two construction sites in Hyderabad. Interviewed workers and supervisors. Documented observations, collected audio and video evidence. Created Problem Statement Canvas and Empathy Map.</div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot"></div>
+      <div class="t-week">Week 3–4</div>
+      <div class="t-title">Secondary Research & User Journey Mapping</div>
+      <div class="t-desc">Studied Indian and US worker safety laws, Telangana Government Orders, global construction technology, and wage factors. Created user journey map for Bimal Khan. Validated proto-persona assumptions.</div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot"></div>
+      <div class="t-week">Week 5–6</div>
+      <div class="t-title">Ideation — 6-3-5 Brainwriting (72 Ideas)</div>
+      <div class="t-desc">All 8 team members participated in structured 6-3-5 brainwriting session generating 72 ideas. Ran dot-voting and feasibility matrix to shortlist top ideas. Selected autonomous drone as primary solution.</div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot"></div>
+      <div class="t-week">Week 7–8</div>
+      <div class="t-title">Hardware Procurement & Assembly</div>
+      <div class="t-desc">Sourced all components: F450 frame, Raspberry Pi 4, Pixhawk FC, motors, ESCs, LiPo battery, camera, GPS, and sensors. Assembled and calibrated the quadcopter. Conducted bench tests for ESC calibration and motor spin-up.</div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot"></div>
+      <div class="t-week">Week 9</div>
+      <div class="t-title">AI Model Integration & Software Development</div>
+      <div class="t-desc">Trained YOLOv8-nano model on a dataset of construction site images. Deployed inference pipeline on Raspberry Pi. Built Flask API for alert routing. Integrated 4G upload and supervisor dashboard. Conducted indoor simulation tests.</div>
+    </div>
+    <div class="t-item">
+      <div class="t-dot"></div>
+      <div class="t-week">Week 10</div>
+      <div class="t-title">Testing, Validation & Final Documentation</div>
+      <div class="t-desc">Conducted outdoor flight tests and PPE detection accuracy trials. Measured system latency and alert responsiveness. Compiled all documentation — field reports, design thinking artifacts, technical specs, and simulation results.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SIMULATION RESULTS -->
+<section id="results">
+  <div class="sec-tag">Evaluation Phase</div>
+  <div class="sec-title">Simulation Results</div>
+  <div class="sec-lead">Controlled simulation of the WorkShield drone system across PPE detection accuracy, alert latency, flight stability, and coverage area metrics.</div>
+
+  <div class="results-big">
+    <div class="res-big-card">
+      <div class="res-big-num">82%</div>
+      <div class="res-big-label">PPE Detection Accuracy</div>
+    </div>
+    <div class="res-big-card">
+      <div class="res-big-num">&lt;300ms</div>
+      <div class="res-big-label">Alert Latency</div>
+    </div>
+    <div class="res-big-card">
+      <div class="res-big-num">20 min</div>
+      <div class="res-big-label">Avg Flight Time</div>
+    </div>
+    <div class="res-big-card">
+      <div class="res-big-num">94%</div>
+      <div class="res-big-label">Stable Hovering Rate</div>
+    </div>
+  </div>
+
+  <!-- Confusion Matrix SVG -->
+  <div class="diag-wrap">
+    <div class="sec-tag" style="margin-bottom:1rem">· PPE Detection Confusion Matrix (Helmet Class)</div>
+    <svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg" style="max-width:500px;margin:0 auto;display:block">
+      <text x="250" y="22" text-anchor="middle" fill="#777" font-size="9" letter-spacing="2">PREDICTED LABEL</text>
+      <text x="250" y="40" text-anchor="middle" fill="#aaa" font-size="9">HELMET DETECTED</text>
+      <text x="370" y="40" text-anchor="middle" fill="#aaa" font-size="9">NO HELMET</text>
+      <text x="30" y="130" text-anchor="middle" fill="#777" font-size="9" letter-spacing="1" transform="rotate(-90,30,130)">ACTUAL</text>
+      <text x="60" y="105" text-anchor="middle" fill="#aaa" font-size="9">WEARING</text>
+      <text x="60" y="185" text-anchor="middle" fill="#aaa" font-size="9">NOT WEARING</text>
+      <!-- TP -->
+      <rect x="150" y="60" width="150" height="80" rx="2" fill="#1c2a0a" stroke="#f5c518" stroke-width="1.5"/>
+      <text x="225" y="98" text-anchor="middle" fill="#f5c518" font-size="26" font-weight="bold">74</text>
+      <text x="225" y="115" text-anchor="middle" fill="#777" font-size="8">TRUE POSITIVE</text>
+      <!-- FP -->
+      <rect x="310" y="60" width="150" height="80" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="385" y="98" text-anchor="middle" fill="#aaa" font-size="26">18</text>
+      <text x="385" y="115" text-anchor="middle" fill="#777" font-size="8">FALSE POSITIVE</text>
+      <!-- FN -->
+      <rect x="150" y="150" width="150" height="80" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="225" y="188" text-anchor="middle" fill="#aaa" font-size="26">22</text>
+      <text x="225" y="205" text-anchor="middle" fill="#777" font-size="8">FALSE NEGATIVE</text>
+      <!-- TN -->
+      <rect x="310" y="150" width="150" height="80" rx="2" fill="#1c2a0a" stroke="#f5c518" stroke-width="1.5"/>
+      <text x="385" y="188" text-anchor="middle" fill="#f5c518" font-size="26" font-weight="bold">86</text>
+      <text x="385" y="205" text-anchor="middle" fill="#777" font-size="8">TRUE NEGATIVE</text>
+    </svg>
+  </div>
+
+  <div class="result-detail">
+    <div class="rd-card">
+      <h3>Detection Performance by Class</h3>
+      <div class="rd-bar-wrap">
+        <div class="rd-bar-label"><span>Helmet Detection</span><span>82%</span></div>
+        <div class="rd-bar"><div class="rd-bar-fill" style="width:82%"></div></div>
+      </div>
+      <div class="rd-bar-wrap">
+        <div class="rd-bar-label"><span>Safety Vest Detection</span><span>78%</span></div>
+        <div class="rd-bar"><div class="rd-bar-fill" style="width:78%"></div></div>
+      </div>
+      <div class="rd-bar-wrap">
+        <div class="rd-bar-label"><span>Person Detection</span><span>95%</span></div>
+        <div class="rd-bar"><div class="rd-bar-fill" style="width:95%"></div></div>
+      </div>
+      <div class="rd-bar-wrap">
+        <div class="rd-bar-label"><span>Danger Zone Breach</span><span>88%</span></div>
+        <div class="rd-bar"><div class="rd-bar-fill" style="width:88%"></div></div>
+      </div>
+    </div>
+    <div class="rd-card">
+      <h3>System Performance Metrics</h3>
+      <div class="rd-bar-wrap">
+        <div class="rd-bar-label"><span>Stable Flight (hover accuracy)</span><span>94%</span></div>
+        <div class="rd-bar"><div class="rd-bar-fill" style="width:94%"></div></div>
+      </div>
+      <div class="rd-bar-wrap">
+        <div class="rd-bar-label"><span>Alert Delivery Success Rate</span><span>91%</span></div>
+        <div class="rd-bar"><div class="rd-bar-fill" style="width:91%"></div></div>
+      </div>
+      <div class="rd-bar-wrap">
+        <div class="rd-bar-label"><span>Site Coverage (200m² area)</span><span>87%</span></div>
+        <div class="rd-bar"><div class="rd-bar-fill" style="width:87%"></div></div>
+      </div>
+      <div class="rd-bar-wrap">
+        <div class="rd-bar-label"><span>Battery Life (vs target 20min)</span><span>95%</span></div>
+        <div class="rd-bar"><div class="rd-bar-fill" style="width:95%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FUTURE SCOPE -->
+<section id="future" style="background:var(--dark)">
+  <div class="sec-tag">Future Scope</div>
+  <div class="sec-title">What's Next</div>
+  <div class="sec-lead">WorkShield is a foundation. The roadmap beyond the current prototype expands detection, autonomy, and integration across all construction sites.</div>
+
+  <div class="future-grid">
+    <div class="fut-card">
+      <div class="fut-icon">🔋</div>
+      <h3>Charging Dock & Continuous Patrol</h3>
+      <p>An auto-landing charging dock allows the drone to return, recharge, and resume patrol — enabling 24/7 monitoring without manual intervention.</p>
+    </div>
+    <div class="fut-card">
+      <div class="fut-icon">🤖</div>
+      <h3>Multi-Drone Swarm</h3>
+      <p>Deploy a coordinated swarm of 3–5 drones across large construction sites with a central coordination server dividing the site into coverage zones.</p>
+    </div>
+    <div class="fut-card">
+      <div class="fut-icon">🌡️</div>
+      <h3>Thermal & Gas Sensing</h3>
+      <p>Add a FLIR Lepton thermal camera and advanced gas sensor array to detect heat stress, fire risk, and chemical exposure across the site in real time.</p>
+    </div>
+    <div class="fut-card">
+      <div class="fut-icon">📱</div>
+      <h3>Worker Safety App</h3>
+      <p>A bilingual app (Hindi + Telugu) giving workers access to their personal safety score, incident history, PPE compliance record, and emergency SOS button.</p>
+    </div>
+    <div class="fut-card">
+      <div class="fut-icon">🏛️</div>
+      <h3>Government Integration</h3>
+      <p>Link violation logs directly to Telangana Labour Department portals under G.O.Ms.No. 4 (2020), enabling automated compliance reporting and penalty enforcement.</p>
+    </div>
+    <div class="fut-card">
+      <div class="fut-icon">🧠</div>
+      <h3>Predictive Risk AI</h3>
+      <p>Train a time-series model on historical violation data to predict high-risk zones and time windows — enabling proactive safety interventions before accidents occur.</p>
+    </div>
+  </div>
+
+  <!-- Future IoT Architecture SVG -->
+  <div class="diag-wrap" style="margin-top:3rem">
+    <div class="sec-tag" style="margin-bottom:1rem">· Future WorkShield Integrated Architecture</div>
+    <svg viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:240px">
+      <defs>
+        <marker id="arr3" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L7,3 z" fill="#f5c518"/>
+        </marker>
+      </defs>
+      <!-- Central Hub -->
+      <rect x="300" y="85" width="200" height="70" rx="3" fill="#1a1a0a" stroke="#f5c518" stroke-width="2"/>
+      <text x="400" y="112" text-anchor="middle" fill="#f5c518" font-size="11" font-weight="bold" letter-spacing="1">WORKSHEILD HUB</text>
+      <text x="400" y="128" text-anchor="middle" fill="#aaa" font-size="8">Cloud · AI · Dashboard</text>
+      <text x="400" y="142" text-anchor="middle" fill="#aaa" font-size="8">Multi-site Command Centre</text>
+
+      <!-- Connections -->
+      <rect x="30" y="30" width="120" height="50" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="90" y="52" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold">DRONE SWARM</text>
+      <text x="90" y="67" text-anchor="middle" fill="#aaa" font-size="8">3–5 Autonomous Drones</text>
+      <line x1="150" y1="55" x2="300" y2="105" stroke="#f5c518" stroke-width="1" marker-end="url(#arr3)" stroke-dasharray="4,3"/>
+
+      <rect x="30" y="160" width="120" height="50" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="90" y="181" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold">WORKER APP</text>
+      <text x="90" y="196" text-anchor="middle" fill="#aaa" font-size="8">Safety Score + SOS</text>
+      <line x1="150" y1="185" x2="300" y2="145" stroke="#f5c518" stroke-width="1" marker-end="url(#arr3)" stroke-dasharray="4,3"/>
+
+      <rect x="650" y="30" width="130" height="50" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="715" y="52" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold">GOVT PORTAL</text>
+      <text x="715" y="67" text-anchor="middle" fill="#aaa" font-size="8">Telangana Labour Dept</text>
+      <line x1="500" y1="105" x2="650" y2="55" stroke="#f5c518" stroke-width="1" marker-end="url(#arr3)" stroke-dasharray="4,3"/>
+
+      <rect x="650" y="160" width="130" height="50" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="715" y="181" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold">SUPERVISOR APP</text>
+      <text x="715" y="196" text-anchor="middle" fill="#aaa" font-size="8">Live Alerts + Reports</text>
+      <line x1="500" y1="145" x2="650" y2="185" stroke="#f5c518" stroke-width="1" marker-end="url(#arr3)" stroke-dasharray="4,3"/>
+
+      <rect x="185" y="5" width="130" height="40" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="250" y="21" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold">THERMAL CAMERA</text>
+      <text x="250" y="36" text-anchor="middle" fill="#aaa" font-size="8">Heat Stress + Fire Risk</text>
+      <line x1="300" y1="30" x2="350" y2="85" stroke="#f5c518" stroke-width="1" marker-end="url(#arr3)" stroke-dasharray="4,3"/>
+
+      <rect x="485" y="5" width="120" height="40" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="545" y="21" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold">GAS SENSORS</text>
+      <text x="545" y="36" text-anchor="middle" fill="#aaa" font-size="8">Chemical Exposure</text>
+      <line x1="500" y1="30" x2="450" y2="85" stroke="#f5c518" stroke-width="1" marker-end="url(#arr3)" stroke-dasharray="4,3"/>
+
+      <rect x="300" y="195" width="200" height="40" rx="2" fill="#161616" stroke="#252525"/>
+      <text x="400" y="213" text-anchor="middle" fill="#f5c518" font-size="9" font-weight="bold">AUTO CHARGING DOCK</text>
+      <text x="400" y="228" text-anchor="middle" fill="#aaa" font-size="8">24 / 7 Continuous Patrol</text>
+      <line x1="400" y1="155" x2="400" y2="195" stroke="#f5c518" stroke-width="1" marker-end="url(#arr3)" stroke-dasharray="4,3"/>
+    </svg>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section id="conclusion">
+  <div class="sec-tag">Conclusion</div>
+  <div class="sec-title">Mission Accomplished</div>
+  <div class="conc-inner">
+    <div class="conc-quote">"WorkShield demonstrates that construction worker safety can be actively monitored, not just regulated — bridging the gap between policy and practice through autonomous AI."</div>
+    <p class="conc-body">WorkShield emerged from real conversations with real workers — people like Bimal Khan, who risk their lives daily for wages as low as ₹400. Through rigorous Design Thinking — field observation, empathy mapping, 72 ideas, and hands-on prototyping — we built a drone-based system capable of detecting PPE violations, alerting workers in real time, and logging incidents for supervisors and regulatory bodies.</p>
+    <p class="conc-body">The system achieves 82% PPE detection accuracy with under 300ms alert latency, operating for 20 minutes per flight at a hardware cost of ₹43,300. While construction remains India's most dangerous occupation, technology like WorkShield offers a scalable, affordable, and immediately deployable path to making sites safer — not through adding paperwork, but by adding eyes in the sky that never blink.</p>
+    <div class="conc-tags">
+      <span class="ctag">Design Thinking</span>
+      <span class="ctag">YOLOv8</span>
+      <span class="ctag">Raspberry Pi 4</span>
+      <span class="ctag">Autonomous Drone</span>
+      <span class="ctag">PPE Detection</span>
+      <span class="ctag">Real-time Alerts</span>
+      <span class="ctag">Construction Safety</span>
+      <span class="ctag">Computer Vision</span>
+      <span class="ctag">Telangana</span>
+      <span class="ctag">OSHA Standards</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Work<span>Shield</span></div>
+  <p>Team WorkShield · 2025–26 · Design Thinking Final Documentation</p>
+  <p style="font-size:.72rem;color:#444">SE24UARI026 · SE24UARI028 · SE24UCSE002 · SE24UCSE017 · SE24UCIE025 · SE24UBIT038 · SE24UECE052 · SE24UECE027</p>
+</footer>
+
+</body>
+</html>
